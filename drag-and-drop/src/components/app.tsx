@@ -1,23 +1,52 @@
-import React from 'react';
+import * as React from 'react';
+import styled, { keyframes } from 'styled-components';
 import logo from 'src/assets/images/logo.svg';
-import 'src/components/app.css';
+
+const Container = styled.div`
+  text-align: center;
+`;
+
+const Header = styled.header`
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+`;
+
+type LogoProps = {
+  src: any;
+  alt: string;
+  width?: string;
+  height?: string;
+};
+
+const LogoSpin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Logo = styled.img.attrs<LogoProps>((props) => ({
+  src: props.src,
+  alt: props.alt,
+}))<LogoProps>`
+  height: ${(props) => props.height || "40vmin"};
+  pointerEvents: none;
+  animation: ${LogoSpin} infinite 20s linear;
+`;
 
 export const Component: React.FC<Record<string, never>> = (): React.ReactElement =>
   (
-    <div className="app">
-      <header className="app-header">
-        <img src={logo} className="app-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="app-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Header>
+        <Logo src={logo} alt="logo" />
+      </Header>
+    </Container>
   );

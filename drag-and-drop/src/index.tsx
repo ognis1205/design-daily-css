@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import * as React from 'react';
+import * as ReactDOMClient from 'react-dom/client';
 import * as App from 'src/components/app';
 import 'src/assets/styles/index.css';
 
-const root = ReactDOM.createRoot(
+const root = ReactDOMClient.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
