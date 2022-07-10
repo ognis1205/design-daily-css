@@ -1,7 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-export const Label = styled.p``;
+export const FlexItem = styled.div<
+  Pick<React.CSSProperties, 'flexShrink' | 'flexGrow'>
+>`
+  ${({ flexShrink }) => flexShrink && `flex-shrink: ${flexShrink}`};
+  ${({ flexGrow }) => flexGrow && `flex-grow: ${flexGrow}`};
+`;
 
 export const Flex = styled.div<
   {
@@ -50,8 +55,8 @@ export const Flex = styled.div<
   ${({ gap, flexDirection }) =>
     gap &&
     (flexDirection === "column"
-      ? `>${StackItem}{margin-bottom: ${gap}px}`
-      : `>${StackItem}{margin-right: ${gap}px}`)};
+      ? `>${FlexItem}{margin-bottom: ${gap}px}`
+      : `>${FlexItem}{margin-right: ${gap}px}`)};
   ${({ fullHeight }) => fullHeight && `height: 100%`};
   ${({ fullWidth }) => fullWidth && `width: 100%`};
 `;

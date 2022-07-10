@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import * as Layout from 'src/components/layout';
+import * as Layouts from 'src/components/layouts';
 
-const Block = styled(Layout.Stack)`
+const Block = styled(Layouts.Flex)`
   position: relative;
   border-radius: 4px;
   margin-right: 8px;
@@ -27,6 +27,6 @@ export const Component: React.FC<Props> = ({ name, ...rest }: Props): React.Reac
     alignItems="center"
     justifyContent="center"
   >
-    <Text className="ellipsis">{name}</StyledText>
+    <Text className="ellipsis">{name}</Text>
   </Block>
 );
