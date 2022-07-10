@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+export const Label = styled.p``;
+
 export const Flex = styled.div<
   {
     paddingX?: number;
