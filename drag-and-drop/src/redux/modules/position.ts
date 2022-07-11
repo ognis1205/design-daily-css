@@ -6,16 +6,12 @@ export type Coordinate = {
   y: number;
 };
 
-export type Noop = () => void;
-
-export type PositionHandler = (coord: Coordinate) => void;
-
 export type Handler = (param: {
   coord: Coordinate;
-  start: PositionHandler;
-  move: PositionHandler;
-  stop: Noop;
-  unselect: Noop;
+  start: (coord: Coordinate) => void;
+  move: (coord: Coordinate) => void;
+  stop: () => void;
+  unselect: () => void;
   multiple: boolean;
   id: string;
 }) => void;
@@ -33,7 +29,7 @@ const ACTION_CREATER = actionCreatorFactory('position');
 export const START_ACTION = ACTION_CREATER<{
   id: string;
   coord: Coordinate;
-  single?: boolean
+  single: boolean;
 }>(START);
 
 export const MOVE_ACTION = ACTION_CREATER<{
@@ -52,6 +48,34 @@ export const hasAction = (action: FSA.Action<unknown>): boolean =>
   MOVE_ACTION.match(action) ||
   STOP_ACTION.match(action) ||
   CLEAR_ACTION.match(action);
+
+export const start = (
+  id: string,
+  coord: Coordinate,
+  single = true
+): FSA.Action<{
+  id: string;
+  coord: Coordinate;
+  single: boolean
+}> =>
+  START_ACTION({ id: id, coord: coord, single: single });
+
+export const move = (
+  id: string | string[],
+  coord: Coordinate
+): FSA.Action<{
+  id: string | string[];
+  coord: Coordinate;
+}> =>
+  MOVE_ACTION({ id: id, coord: coord });
+
+export const stop = (id: string): FSA.Action<{
+  id: string | string[];
+}> =>
+  STOP_ACTION({ id: id });
+
+export const clear = (): FSA.Action<void> =>
+  CLEAR_ACTION();
 
 export type State = {
   dragging: boolean;
