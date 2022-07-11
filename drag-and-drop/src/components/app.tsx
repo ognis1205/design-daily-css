@@ -1,5 +1,7 @@
 import * as React from 'react';
+import * as ReactRedux from 'react-redux';
 import styled, { keyframes } from 'styled-components';
+import store from 'src/redux/store';
 import logo from 'src/assets/images/logo.svg';
 
 const Container = styled.div`
@@ -44,9 +46,11 @@ const Logo = styled.img.attrs<LogoProps>((props) => ({
 
 export const Component: React.FC<Record<string, never>> = (): React.ReactElement =>
   (
-    <Container>
-      <Header>
-        <Logo src={logo} alt="logo" />
-      </Header>
-    </Container>
+    <ReactRedux.Provider store={store}>
+      <Container>
+        <Header>
+          <Logo src={logo} alt="logo" />
+        </Header>
+      </Container>
+    </ReactRedux.Provider>
   );

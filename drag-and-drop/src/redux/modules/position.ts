@@ -59,7 +59,7 @@ export type State = {
     translate: Coordinate;
     initial: Coordinate;
     last: Coordinate;
-    id: string;
+    id?: string;
   };
 };
 
@@ -90,6 +90,7 @@ const reducer = (
 
   if (FSA.isType(action, MOVE_ACTION)) {
     if (!state.elements) return state;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const elements = state.elements!;
     return {
       ...state,
@@ -105,6 +106,7 @@ const reducer = (
 
   if (FSA.isType(action, STOP_ACTION)) {
     if (!state.elements) return state;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const elements = state.elements!;
     return {
       elements: { ...elements, last: elements.translate },
