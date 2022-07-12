@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactSpring from "react-spring";
 import * as Layouts from 'src/components/layouts';
+import * as Block from 'src/containers/sliding/block';
 import * as Utils from 'src/containers/sliding/utils';
 import useDraggable from 'src/hooks/draggable';
 import styled from "styled-components";
@@ -167,5 +168,31 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
     }
   }, [store, clear, setSprings, columns]);
 
-  return <></>;
+  return (
+    <Layouts.Flex style={{ height: 400 }} fullHeight flexDirection="column">
+      <Container ref={container}>
+        {springs.map((props, i) => {
+          const id = blocks[i].name;
+          return (
+            <Animated key={blocks[i].name} style={props}>
+              <Block.Component
+                onMouseMove={onMouseMove}
+                onMouseUp={onMouseUp}
+                onMouseDown={(e: React.MouseEvent) => {
+                  dragging.current = i;
+                  onMouseDown(e, id);
+                }}
+                style={{
+                  width: 128 * blocks[i].width - 8,
+                  height: 120,
+                  background: blocks[i].background
+                }}
+                name={blocks[i].name}
+              />
+            </Animated>
+          );
+        })}
+      </Container>
+    </Layouts.Flex>
+  );
 };

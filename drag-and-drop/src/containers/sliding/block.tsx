@@ -17,6 +17,8 @@ const Text = styled.p`
 type Props = {
   name: string;
   style: React.CSSProperties;
+  onMouseUp: (event: React.MouseEvent) => void;
+  onMouseMove: (event: React.MouseEvent) => void;
   onMouseDown: (event: React.MouseEvent) => void;
 };
 
