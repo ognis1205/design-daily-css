@@ -86,17 +86,13 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
   });
 
   React.useEffect(() => {
-    console.log('effect 1', state);
     if (!state?.elements?.id) return;
-    console.log(!state?.elements.id);
 
-    console.log('effect 2');
     const gap = {
       x: state.elements.translate.x,
       y: state.elements.translate.y
     };
 
-    console.log('effect 3');
     const index = order.current.findIndex((a) => dragging.current === a.index);
 
     const element = order.current[index];
@@ -122,7 +118,6 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
       position: number,
       width?: number
     ) => {
-      console.log('swap');
       if (rhs === -1 && width === 1) {
         let n = reordered.findIndex(
           (a) => a.position > position) + (movement === 'BACKWARD' ? 0 : -1);
@@ -141,7 +136,6 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
       }
     };
 
-    console.log('effect 4');
     let newIndex = positionToIndex.current[newPosition];
 
     if (newPosition < 0) {
