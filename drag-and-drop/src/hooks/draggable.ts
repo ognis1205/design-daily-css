@@ -5,16 +5,16 @@ import * as DOM from 'src/utils/dom';
 
 type Params = {
   wrapper: React.RefObject<HTMLElement>;
-  onDragStart: (event: React.MouseEvent) => void;
-  onDragEnd: (event: React.MouseEvent) => void;
-  single: boolean;
+  onDragStart?: (event: React.MouseEvent) => void;
+  onDragEnd?: (event: React.MouseEvent) => void;
+  single?: boolean;
 };
 
 const useDraggable = ({
   wrapper,
   onDragStart,
   onDragEnd,
-  single,
+  single = true,
 }: Params): [
   ReturnType<typeof ReactRedux.useStore>,
   (event: React.MouseEvent, id: string) => void,
