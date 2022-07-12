@@ -17,13 +17,16 @@ const useDraggable = ({
   onDragEnd,
   single = true,
 }: Params): [
-  Store.Type,
+  Position.State,
+//  Store.Type,
   (event: React.MouseEvent, id: string) => void,
   (event: React.MouseEvent) => void,
   (event: React.MouseEvent) => void,
   () => void,
 ] => {
-  const store = ReactRedux.useStore().getState() as Store.Type;
+//  const state = (ReactRedux.useStore()?.getState() as Store.Type)?.position as Position.State;
+//  const store = ReactRedux.useStore()?.getState() as Store.Type;
+  const state = ReactRedux.useSelector((state: Store.Type) => state.position);
 
   const dispatch = ReactRedux.useDispatch();
 
@@ -79,7 +82,7 @@ const useDraggable = ({
   };
 
   return [
-    store,
+    state,
     onMouseDown,
     onMouseMove,
     onMouseUp,

@@ -106,6 +106,7 @@ const reducer = (
       dragging: true,
       elements: {
         ...getInitialElementState(),
+        id: action.payload.id,
         initial: action.payload.coord,
       },
       ...(action.payload.single ? { id: action.payload.id } : {})

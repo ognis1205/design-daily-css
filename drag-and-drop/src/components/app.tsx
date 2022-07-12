@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactRedux from 'react-redux';
+import * as Blocks from 'src/containers/sliding/blocks';
 import styled, { keyframes } from 'styled-components';
 import store from 'src/redux/store';
 import logo from 'src/assets/images/logo.svg';
@@ -51,6 +52,11 @@ export const Component: React.FC<Record<string, never>> = (): React.ReactElement
         <Header>
           <Logo src={logo} alt="logo" />
         </Header>
+        <Blocks.Component
+          columns={3}
+          multiWidth={false}
+          numItems={22}
+        />
       </Container>
     </ReactRedux.Provider>
   );

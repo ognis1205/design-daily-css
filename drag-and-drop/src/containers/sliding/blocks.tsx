@@ -79,20 +79,24 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
     };
   };
 
-  const [store, onMouseDown, onMouseMove, onMouseUp, clear] = useDraggable({
+  const [state, onMouseDown, onMouseMove, onMouseUp, clear] = useDraggable({
     container,
     onDragStart,
     single: true
   });
 
   React.useEffect(() => {
-    if (!store?.position?.elements?.id) return;
+    console.log('effect 1', state);
+    if (!state?.elements?.id) return;
+    console.log(!state?.elements.id);
 
+    console.log('effect 2');
     const gap = {
-      x: store.position.elements.translate.x,
-      y: store.position.elements.translate.y
+      x: state.elements.translate.x,
+      y: state.elements.translate.y
     };
 
+    console.log('effect 3');
     const index = order.current.findIndex((a) => dragging.current === a.index);
 
     const element = order.current[index];
@@ -106,7 +110,7 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
 
     const z = y + x + position;
 
-    let newPosition = Math.round(z);
+    const newPosition = Math.round(z);
 
     const movement = newPosition - position > 0 ? 'FORWARD' : 'BACKWARD';
 
@@ -118,6 +122,7 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
       position: number,
       width?: number
     ) => {
+      console.log('swap');
       if (rhs === -1 && width === 1) {
         let n = reordered.findIndex(
           (a) => a.position > position) + (movement === 'BACKWARD' ? 0 : -1);
@@ -136,6 +141,7 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
       }
     };
 
+    console.log('effect 4');
     let newIndex = positionToIndex.current[newPosition];
 
     if (newPosition < 0) {
@@ -143,8 +149,11 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
     } else if (index !== newIndex) {
       const newElement = order.current[positionToIndex.current[newPosition]];
       if (newElement && newElement.width > 1)
-        if (!(Math.abs(newPosition - position) < newElement.width))
+        if (Math.abs(newPosition - position) < newElement.width) {
+          // Do nothing.
+        } else {
           swap(index, newIndex, newPosition, element.width);
+        }
       else
         swap(index, newIndex, newPosition, element.width);
     }
@@ -157,16 +166,16 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
         gap.x,
         gap.y,
         dragging.current,
-        store.position.dragging
+        state.dragging
       )
     );
 
-    if (!store.position) {
+    if (!state.dragging) {
       clear();
       order.current = reordered;
       positionToIndex.current = Utils.getPositionToIndex(order.current, columns);
     }
-  }, [store, clear, setSprings, columns]);
+  }, [state, clear, setSprings, columns]);
 
   return (
     <Layouts.Flex style={{ height: 400 }} fullHeight flexDirection="column">
