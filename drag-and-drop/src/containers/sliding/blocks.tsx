@@ -22,9 +22,11 @@ const Animated = styled(ReactSpring.animated.div)`
 
 const Container = styled(Layouts.Flex)`
   flex-grow: 2;
-  overflow: auto;
   flex-wrap: wrap;
   position: relative;
+  min-height: 100vh;
+  overflow: scroll;
+  justify-content: center;
 `;
 
 type Item = {
@@ -172,7 +174,7 @@ export const Component = ({ columns, multiWidth, numItems }: Props): React.React
   }, [state, clear, setSprings, columns]);
 
   return (
-    <Layouts.Flex style={{ height: 400 }} fullHeight flexDirection="column">
+    <Layouts.Flex fullHeight flexDirection="column">
       <Container ref={container}>
         {springs.map((props, i) => {
           const id = blocks[i].name;

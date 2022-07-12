@@ -8,7 +8,7 @@ export const coordinateOf = (
   { row, col }: { row: number; col: number }
 ) => {
   return {
-    x: col * 128,
+    x: (col - 1) * 128,
     y: row * 128,
   };
 };
