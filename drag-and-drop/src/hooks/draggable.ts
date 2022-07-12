@@ -1,28 +1,29 @@
 import * as React from 'react';
 import * as ReactRedux from 'react-redux';
+import * as Store from 'src/redux/store';
 import * as Position from 'src/redux/modules/position';
 import * as DOM from 'src/utils/dom';
 
 type Params = {
-  wrapper: React.RefObject<HTMLElement>;
+  container: React.RefObject<HTMLElement>;
   onDragStart?: (event: React.MouseEvent) => void;
   onDragEnd?: (event: React.MouseEvent) => void;
   single?: boolean;
 };
 
 const useDraggable = ({
-  wrapper,
+  container,
   onDragStart,
   onDragEnd,
   single = true,
 }: Params): [
-  ReturnType<typeof ReactRedux.useStore>,
+  Store.Type,
   (event: React.MouseEvent, id: string) => void,
   (event: React.MouseEvent) => void,
   (event: React.MouseEvent) => void,
   () => void,
 ] => {
-  const store = ReactRedux.useStore();
+  const store = ReactRedux.useStore().getState() as Store.Type;
 
   const dispatch = ReactRedux.useDispatch();
 
@@ -36,9 +37,9 @@ const useDraggable = ({
  const onMouseMove = React.useCallback(
     (event: React.MouseEvent) => {
       if (
-        wrapper.current &&
+        container.current &&
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        !DOM.isInside(wrapper.current!, {
+        !DOM.isInside(container.current!, {
           left: event.clientX,
           top: event.clientY
         })
@@ -55,7 +56,7 @@ const useDraggable = ({
             y: event.clientY
           }
         ));
-    }, [wrapper, onDragEnd]);
+    }, [container, onDragEnd]);
 
   const onMouseUp = React.useCallback(
     (event: React.MouseEvent) => {
